@@ -15,10 +15,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -32,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/history', [SalesPageController::class, 'index'])->name('generate.history');
     Route::get('/history/{id}', [SalesPageController::class, 'show'])->name('generate.show');
     Route::delete('/history/{id}', [SalesPageController::class, 'destroy'])->name('generate.destroy');
+    Route::get('/history/{id}/edit', [SalesPageController::class, 'edit'])->name('generate.edit');
+    Route::patch('/history/{id}', [SalesPageController::class, 'update'])->name('generate.update');
+    Route::get('/history/{id}/export', [SalesPageController::class, 'export'])->name('generate.export');
 });
 
 require __DIR__.'/auth.php';
